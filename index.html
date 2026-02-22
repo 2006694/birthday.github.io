@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0f0f14;
+  --glass:rgba(255,255,255,0.06);
+  --accent:#ff4ecb;
+  --accent2:#6a5cff;
+  --text:#f5f5f7;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* Background particles */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* Smooth scroll */
+html{
+  scroll-behavior:smooth;
+}
+
+/* Sections */
+section{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
+  text-align:center;
+}
+
+.glass{
+  background:var(--glass);
+  backdrop-filter:blur(25px);
+  border-radius:24px;
+  padding:40px;
+  max-width:800px;
+  box-shadow:0 0 60px rgba(255,78,203,0.15);
+  animation:fadeUp 1.2s ease forwards;
+  opacity:0;
+}
+/* ===== DARK COSMIC MEMORY SECTION ===== */
+
+.memory-section{
+  position:relative;
+  perspective:1400px;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 50%, #1a1028 0%, #0b0b12 70%);
+}
+
+.memory-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 30% 40%, rgba(106,92,255,0.2), transparent 60%),
+             radial-gradient(circle at 70% 60%, rgba(255,78,203,0.15), transparent 60%);
+  animation:nebulaPulse 8s infinite alternate ease-in-out;
+  z-index:0;
+}
+
+@keyframes nebulaPulse{
+  from{opacity:0.6}
+  to{opacity:1}
+}
+
+.carousel{
+  position:relative;
+  width:320px;
+  height:400px;
+  transform-style:preserve-3d;
+  animation:rotate 40s infinite linear;
+  z-index:2;
+}
+
+.carousel:hover{
+  animation-play-state:paused;
+}
+
+.carousel img{
+  position:absolute;
+  width:280px;
+  height:380px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+  cursor:pointer;
+  transition:0.5s;
+  filter:brightness(0.9) contrast(1.1);
+}
+
+.carousel img:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 50px #6a5cff;
+  filter:brightness(1.1);
+}
+
+@keyframes rotate{
+  from{transform:rotateY(0deg)}
+  to{transform:rotateY(360deg)}
+}
+
+/* Floating glowing stars */
+.star{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation:twinkle 3s infinite ease-in-out;
+  z-index:1;
+}
+
+@keyframes twinkle{
+  0%,100%{opacity:0.3;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.8)}
+}
+/* Modal */
+#galleryModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  visibility:hidden;
+  transition:0.5s;
+  z-index:10000;
+}
+
+#galleryModal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:20px;
+}
+
+#galleryModal.active{
+  opacity:1;
+  visibility:visible;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+h1,h2{
+  font-family:'Playfair Display',serif;
+  margin-bottom:20px;
+}
+
+h1{
+  font-size:3rem;
+  background:linear-gradient(45deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+button{
+  padding:12px 28px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:linear-gradient(45deg,var(--accent),var(--accent2));
+  color:white;
+  font-size:1rem;
+  transition:0.3s;
+  margin-top:20px;
+}
+
+/* ===== Music Button Styling ===== */
+
+#musicToggle{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff4ecb, #6a5cff);
+  color: white;
+  font-size: 14px;
+  box-shadow: 0 0 15px rgba(255,78,203,0.4);
+  transition: 0.3s;
+}
+
+#musicToggle:hover{
+  transform: scale(1.08);
+  box-shadow: 0 0 25px #ff4ecb;
+}
+
+button:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 25px var(--accent);
+}
+
+/* Cake */
+.cake{
+  font-size:100px;
+  cursor:pointer;
+  transition:0.5s;
+}
+.cake:hover{
+  transform:scale(1.1) rotate(5deg);
+}
+
+.hidden{
+  display:none;
+}
+
+/* Floating Hearts */
+.heart{
+  position:fixed;
+  font-size:20px;
+  animation:float 5s linear infinite;
+  color:var(--accent);
+}
+@keyframes float{
+  from{transform:translateY(100vh);opacity:1}
+  to{transform:translateY(-10vh);opacity:0}
+}
+
+/* Password */
+.password-box{
+  margin-top:20px;
+}
+
+input{
+  padding:12px;
+  width:80%;
+  border-radius:30px;
+  border:none;
+  outline:none;
+  text-align:center;
+  background:#1b1b25;
+  color:white;
+  font-size:1rem;
+  margin-bottom:15px;
+  box-shadow:0 0 10px rgba(255,78,203,0.2);
+}
+
+.error{
+  color:#ff4e4e;
+  margin-top:10px;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
+  100%{transform:translateX(0)}
+}
+.shake{
+  animation:shake 0.4s;
+}
+
+#secretMessage{
+  opacity:0;
+  transition:1s ease;
+  margin-top:20px;
+}
+
+#secretMessage.show{
+  opacity:1;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  h1{font-size:2.2rem}
+  .glass{padding:25px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- Music -->
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b9f50c7db.mp3?filename=romantic-background-112191.mp3" type="audio/mp3">
+</audio>
+
+<!-- SECTION 1 -->
+<section>
+  <div class="glass">
+    <h1>Happy Wala Birthday To You Deeli  💖</h1>
+    <p>Tonight isn’t just about candles and cake…  
+    It’s about celebrating the most beautiful soul in the world.</p>
+    <button onclick="scrollToNext()">Begin Our Story ✨</button>
+  </div>
+</section>
+
+<!-- ===== CINEMATIC MEMORY CAROUSEL ===== -->
+<section class="memory-section">
+  <div class="glass">
+    <h2>This is for you ✨</h2>
+    <p>Every memory with you deserves its own universe.</p>
+
+    <div class="carousel" id="carousel">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-21%20at%207.01.41%20PM.jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-21%20at%207.01.42%20PM%20(1).jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-21%20at%207.01.42%20PM%20(2).jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-21%20at%207.01.42%20PM.jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-21%20at%207.01.43%20PM%20(1).jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-21%20at%207.01.43%20PM.jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-22%20at%202.09.13%20PM%20(2).jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-22%20at%202.09.13%20PM.jpeg?raw=true" onclick="openGallery(this.src)">
+      <img src="https://github.com/2006694/birthday.github.io/blob/main/images/WhatsApp%20Image%202026-02-22%20at%202.09.14%20PM.jpeg?raw=true" onclick="openGallery(this.src)">
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="galleryModal" onclick="closeGallery()">
+  <img id="galleryModalImg">
+</div>
+
+<!-- SECTION 2 -->
+<section>
+  <div class="glass">
+    <h2>Always be happy and become successful in life 🌌</h2>
+    <p>Every laugh. Every smile. Every tiny moment.  
+    You don’t just light up rooms — you light up my universe.</p>
+  </div>
+</section>
+<!-- Romantic Background Music -->
+<audio id="bgMusic" loop preload="auto">
+  <source src=""C:\Users\Shivansh\Downloads\Almost_Good_Enough_to_Eat_w_J_Mood_012614_-_Marque_Rome.mp3"" type="audio/mp3">
+</audio>
+
+<!-- Music Toggle Button -->
+<button id="musicToggle">
+  🎵 Play Music
+</button>
+
+<!-- SECTION 3 -->
+<section>
+  <div class="glass">
+    <h2>Blow The Candle 🎂 Click on  </h2>
+    <div class="cake" onclick="blowCandle()">🎂</div>
+    <p id="wishText" class="hidden">
+      Your wish has been sent to the stars ✨  
+      And mine? To always stay by your side.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 4 PASSWORD LOCK -->
+<section>
+  <div class="glass">
+    <h2>One Last Surprise 🔐</h2>
+    <p>Only you know the key to my heart...</p>
+
+    <div class="password-box">
+      <input type="password" id="passwordInput" placeholder="Enter the secret password">
+      <br>
+      <button onclick="checkPassword()">Unlock 💖</button>
+      <div id="error" class="error"></div>
+    </div>
+
+    <div id="secretMessage">
+      <h2>You Unlocked My Heart 💕</h2>
+      <p>
+        itna kuch axa toh nhi hai par hope that tuje ye pasnd aaye 
+        jaisa bhi lage tuje bataeo muje thike hamesha khush rehna❤️
+        Happy Birthday once again deeli be happy and always be healthy . ✨
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+/* Scroll */
+function scrollToNext(){
+  window.scrollBy({top:window.innerHeight,behavior:'smooth'});
+}
+
+/* Cake */
+function blowCandle(){
+  document.getElementById("wishText").classList.remove("hidden");
+}
+
+/* Password */
+const correctPassword="forever"; // CHANGE HERE
+
+function checkPassword(){
+  const input=document.getElementById("passwordInput");
+  const error=document.getElementById("error");
+  const secret=document.getElementById("secretMessage");
+
+  if(input.value===correctPassword){
+    secret.classList.add("show");
+    error.textContent="";
+    input.style.display="none";
+  } else {
+    error.textContent="Wrong password... try again 💔";
+    input.classList.add("shake");
+    setTimeout(()=>input.classList.remove("shake"),400);
+  }
+}
+
+/* ===== 3D IMAGE POSITIONING ===== */
+
+const carousel = document.getElementById("carousel");
+const images = carousel.getElementsByTagName("img");
+const total = images.length;
+const angle = 360 / total;
+
+for(let i=0;i<total;i++){
+  images[i].style.transform = `rotateY(${i * angle}deg) translateZ(500px)`;
+}
+
+/* ===== FLOATING STARS GENERATOR ===== */
+
+const memorySection = document.querySelector(".memory-section");
+
+for(let i=0;i<80;i++){
+  const star = document.createElement("div");
+  star.classList.add("star");
+  star.style.top = Math.random()*100 + "%";
+  star.style.left = Math.random()*100 + "%";
+  star.style.animationDelay = Math.random()*3 + "s";
+  memorySection.appendChild(star);
+}
+
+/* ===== PARALLAX TILT EFFECT ===== */
+
+memorySection.addEventListener("mousemove",(e)=>{
+  const x = (window.innerWidth/2 - e.clientX)/40;
+  const y = (window.innerHeight/2 - e.clientY)/40;
+  carousel.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+});
+
+memorySection.addEventListener("mouseleave",()=>{
+  carousel.style.transform = "rotateX(0deg) rotateY(0deg)";
+});
+
+/* ===== MODAL ===== */
+
+function openGallery(src){
+  document.getElementById("galleryModalImg").src = src;
+  document.getElementById("galleryModal").classList.add("active");
+}
+
+const music = document.getElementById("bgMusic");
+const toggleBtn = document.getElementById("musicToggle");
+
+// Soft romantic volume
+music.volume = 0.4;
+
+// First click autoplay (for mobile support)
+document.body.addEventListener("click", function firstClick() {
+  music.play().then(() => {
+    toggleBtn.textContent = "⏸ Pause Music";
+  }).catch(()=>{});
+  document.body.removeEventListener("click", firstClick);
+});
+
+// Toggle play/pause
+toggleBtn.addEventListener("click", () => {
+  if (music.paused) {
+    music.play();
+    toggleBtn.textContent = "⏸ Pause Music";
+  } else {
+    music.pause();
+    toggleBtn.textContent = "🎵 Play Music";
+  }
+});
+
+function closeGallery(){
+  document.getElementById("galleryModal").classList.remove("active");
+}
+
+/* Floating Hearts */
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left=Math.random()*100+"vw";
+  heart.innerHTML="❤";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+},800);
+
+/* Particles */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<100;i++){
+  particles.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*2,
+    speedX:(Math.random()-0.5)*0.5,
+    speedY:(Math.random()-0.5)*0.5
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#ffffff";
+  particles.forEach(p=>{
+    p.x+=p.speedX;
+    p.y+=p.speedY;
+    if(p.x<0||p.x>canvas.width)p.speedX*=-1;
+    if(p.y<0||p.y>canvas.height)p.speedY*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener("resize",()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
